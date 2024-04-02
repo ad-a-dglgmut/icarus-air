@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="uploadData()">Upload Data</button>
+<script>
+    async function uploadData()
+    {
+        let user = {userName:"demouser", password:"pass", flights:[]}
+            await fetch("http://localhost:8080/users/register", {
+                method: "POST",
+                headers: {
+                          "Accept": "application/json",
+                          "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+                })
+                .then(result => result.text())
+                .then(text => alert(text));
+    }
+</script>
+</body>
+</html>

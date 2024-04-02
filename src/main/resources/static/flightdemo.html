@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button onclick="uploadData()">Upload Data</button>
+
+    <button onclick="bookFlights()">Book Flight</button>
+    <script>
+        let date = new Date(2024, 11, 17)
+        let user = {start: "ATH", destination:"BCN", isReturning:"true", departureDate:date, userName:"demouser"}
+        let flight;
+        async function uploadData()
+        {
+
+                await fetch("http://localhost:8080/flights/", {
+                    method: "POST",
+                    headers: {
+                              "Accept": "application/json",
+                              "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user)
+                    })
+                    .then(result => result.text())
+                    .then(text => {flight=text;alert(text)});
+
+        console.log(JSON.parse(flight));
+        }
+
+        async function bookFlights()
+        {
+                flight = JSON.parse(flight);
+                flight.passengerInfo = [{name:"pavel", surname:"bozhinov", city:"strumica", country:"macedonia"}]
+                await fetch("http://localhost:8080/flights/bookflight/demouser", {
+                    method: "POST",
+                    headers: {
+                              "Accept": "application/json",
+                              "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(flight)
+                    })
+                    .then(result => result.text())
+                    .then(text => alert(text));
+                console.log(flight)
+        }
+
+    </script>
+</body>
+</html>
